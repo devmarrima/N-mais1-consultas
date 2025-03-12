@@ -1,5 +1,7 @@
 package com.devmarrima.N_mais1_consultas.services;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> find(PageRequest pageRequest) {
 		Page<Product> list = repository.findAll(pageRequest);
+		repository.ProductWithCategories(list.stream().collect(Collectors.toList()));
 		return list.map(x -> new ProductDTO(x));
 	}
 }
